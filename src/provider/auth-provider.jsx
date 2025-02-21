@@ -1,17 +1,25 @@
 import React, { createContext, useState, useContext } from "react";
+import { useClient } from "./client";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUsername] = useState("");
+  const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
+  const client = useClient();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (username && password) {
-      setIsAuthenticated(true);
+    if (!user || !password) return;
+    const data = await client.get("auth", { user, password });
+    if (data.error) {
+      confirm(data.error);
+      return;
     }
+    console.log(data);
+    setIsAuthenticated(true);
+
   };
 
   if (!isAuthenticated) {
@@ -24,10 +32,10 @@ export const AuthProvider = ({ children }) => {
           <h2 className="text-xl font-semibold mb-4">Login</h2>
           <input
             type="text"
-            placeholder="Username"
+            placeholder="User"
             className="w-full p-2 mb-2 border rounded"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={user}
+            onChange={(e) => setUser(e.target.value)}
           />
           <input
             type="password"
@@ -48,7 +56,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ username, password }}>
+    <AuthContext.Provider value={{ user, password }}>
       {children}
     </AuthContext.Provider>
   );

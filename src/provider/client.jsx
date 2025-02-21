@@ -5,7 +5,15 @@ import { useServer } from "./server";
 
 const ClientContext = createContext(null);
 
+/**
+ * 
+ * @returns {Client}
+ */
 export function useClient() {
+	return useContext(ClientContext).client;
+}
+
+export function useClientFeatures() {
 	return useContext(ClientContext);
 }
 

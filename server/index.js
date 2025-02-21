@@ -36,7 +36,7 @@ createServer({ port: 28028 }, async (client) => {
       }
     } else {
       // User does not exist, offer to create an account
-      return { message: "User not found. Would you like to create an account?" };
+      return { error: "User not found. Would you like to create an account?" };
     }
   });
 
