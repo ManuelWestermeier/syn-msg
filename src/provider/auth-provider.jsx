@@ -20,29 +20,32 @@ export const AuthProvider = ({ children }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     if (!user || !password) return;
-    const data = await client.get("auth", { user, password });
-    if (data.error) {
+
+    const passwordHash = crypto.hash(password, 0, 3);
+    const data = await client.get("auth", { user, passwordHash });
+
+    if (data?.error) {
       confirm(data.error);
       return;
     }
-    setIsAuthenticated(true);
+
+    setIsAuthenticated(data.created);
   };
 
   const handleCreateAccount = async (e) => {
     e.preventDefault();
     if (!user || !password) return;
 
-    const passwordHash = crypto.hash(password, password, 2);
+    const passwordHash = crypto.hash(password, 0, 3);
     const userData = crypto.encrypt(password, JSON.stringify(defaultUserData));
+    const data = await client.get("create-account", { user, passwordHash, userData })
 
-    const data = await client.get("auth", { user, passwordHash, userData });
-
-    if (data.error) {
+    if (data?.error) {
       confirm(data.error);
       return;
     }
 
-    setIsAuthenticated(true);
+    setIsAuthenticated(data.created);
   };
 
   if (!isAuthenticated) {

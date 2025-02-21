@@ -12,7 +12,22 @@ createServer({ port: 28028 }, async (client) => {
     if (!rset(data, [["user", "string"], ["passwordHash", "string"]])) {
       return { error: "Invalid data format" };
     }
-    const { user } = data;
+
+    const { user, passwordHash } = data;
+
+    if (!users[user]) return { error: "wrong password or user" };
+
+    if (crypto.hash(passwordHash, 0, 1) == users[user].passwordHash) {
+      users[user].clients = new Set([...users[user].clients, client]);
+      currentUser = user;
+      isAuth = true;
+      return { error: false };
+    }
+    else {
+      isAuth = false;
+      currentUser = "";
+      return { error: "wrong password or user" };
+    }
   });
 
   client.onGet("create-account", (data) => {
