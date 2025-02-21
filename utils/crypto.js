@@ -21,7 +21,7 @@ export function decrypt(password = "", data = "") {
 }
 
 // SHA-256 Hash Example
-export function hash(data, salt = "10", times = 1) {
+export function hash(data, salt = 0, times = 1) {
     let hash = data + salt;
     for (let i = 0; i < times; i++) {
         hash = CryptoJS.SHA512(salt + hash).toString();

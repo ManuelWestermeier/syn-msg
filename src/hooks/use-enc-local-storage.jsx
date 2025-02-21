@@ -4,7 +4,7 @@ import { usePassword } from "../provider/auth-provider";
 
 export default function useEncLocalstorage(key, defaultVlaue) {
     const password = usePassword();
-    const [data, setData] = useLocalStorage(key, encrypt(password, defaultVlaue));
+    const [data, setData] = useLocalStorage(key, encrypt(password, JSON.stringify(defaultVlaue)));
 
     const decryptedData = decrypt(password, data);
     const setDecryptedData = (data) => {

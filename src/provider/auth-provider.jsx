@@ -2,7 +2,7 @@ import React, { createContext, useState, useContext } from "react";
 import { useClient } from "./client";
 import * as crypto from "../../utils/crypto";
 
-const defaultUserData = {
+export const defaultUserData = {
   contacts: [],
   chats: {},
   notes: [],
@@ -24,12 +24,12 @@ export const AuthProvider = ({ children }) => {
     const passwordHash = crypto.hash(password, 0, 3);
     const data = await client.get("auth", { user, passwordHash });
 
-    if (data?.error) {
+    if (data.error) {
       confirm(data.error);
       return;
     }
 
-    setIsAuthenticated(data.created);
+    setIsAuthenticated(data.sucess);
   };
 
   const handleCreateAccount = async (e) => {
@@ -118,3 +118,4 @@ export const AuthProvider = ({ children }) => {
 
 export const useAuth = () => useContext(AuthContext);
 export const usePassword = () => useContext(AuthContext).password;
+export const useUser = () => useContext(AuthContext).user;
