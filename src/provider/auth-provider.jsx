@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
 
   if (!isAuthenticated) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gray-100">
+      <div className="container">
         <form
           onSubmit={handleLogin}
           className="bg-white p-6 rounded-lg shadow-md w-80"

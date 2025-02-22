@@ -18,7 +18,7 @@ export function useClientFeatures() {
 }
 
 export function ClientProvider({ children }) {
-	const serverUrl=useServer();
+	const serverUrl = useServer();
 	const [client, state, reCreateClient, isClosed] = useClientConnection(
 		() => new Client(serverUrl),
 		true,
@@ -27,7 +27,7 @@ export function ClientProvider({ children }) {
 
 	if (state === "failed" || isClosed)
 		return (
-			<>
+			<div className="container">
 				<h3>
 					Failed to connect to the server. Please check the server's status or{" "}
 					<b>reconnect to the internet</b> and <b>try again</b>.
@@ -36,15 +36,15 @@ export function ClientProvider({ children }) {
 				<br />
 				<br />
 				<i>state: {state}</i>
-			</>
+			</div>
 		);
 
 	if (!client)
 		return (
-			<>
+			<div className="container">
 				<h3>The loading state can take up to 1 minute. Please wait</h3>
 				<i>state: {state}</i>
-			</>
+			</div>
 		);
 
 	return (

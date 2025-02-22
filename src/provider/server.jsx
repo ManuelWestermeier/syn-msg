@@ -20,7 +20,7 @@ export const ServerProvider = ({ children }) => {
 
   if (serverUrl.trim() == "") {
     return (
-      <div className="flex flex-col items-center p-4">
+      <div className="container">
         <h1 className="text-xl font-bold">Select Server</h1>
         <input
           type="text"

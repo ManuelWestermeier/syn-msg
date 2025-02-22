@@ -1,14 +1,8 @@
 {
-   "n2": {
-      "passwordHash": "860357439608499928348fb318bf35d0a8f51ed4412003254863aa8c1b85f37fe07ecd4543b157b5359d6bebd79dc77787ee273ef88ab34f18a219f82365b82e",
-      "data": "4e203a6a79d22a7d3f78fdfef34d67769c93faff5cbee92600eaaea6655a57caU2FsdGVkX1+PQ9VKz55M3tNj3fwa4Plf9k/A1b2CvEFnSfHabDvGI/NiOlSI6k8Ifj1vlyODkOJtkNue8FAJhlILhx4Bvp2RJLCOVoRwBIQ=",
-      "clients": [],
-      "groups": {}
-   },
    "N1": {
       "passwordHash": "cdbccd1a2e0131d8e689c2e7dbac982f27fa401b2434bbb6cca6b009524980e8c40a4a2f322f9f16a7973bb92962791e88be659580cfceb914e33ed92b60b823",
-      "data": "09b39890932b790c555c0104282fba9bc4cdf0e7e9630a04dc4fa6d880dc04f0U2FsdGVkX1/sX+c4vpv3HC7wreJphSB7UmF/Tb7TfYJ5ouLEVz3pkirEYrwCzLXA8fs8i5/HXZZ1/Zi784sjHDr7KmHW3/rb3LR5yMNgV2U=",
+      "data": "bfd76728241f6b9b42b345ea458e32a069da77e0ed5f1ae5f11f2e812cc81897U2FsdGVkX1+FFixo1Y1/tmUXZPVyWEUDTqyRH0Z6qaUWrKD7Z9U8WLqNJwXMSB5kz8QhiXPI35Mk3Z1D5MY9MSMFTuye93XsxGWsnAvmvbE=",
       "clients": [],
-      "groups": {}
+      "unread": []
    }
 }
