@@ -18,6 +18,22 @@ export function UserDataProvider({ children }) {
     const password = usePassword();
     const client = useClient();
 
+    client.onGet("send-message", ({ message, groupId }) => {
+        setUserData(old => {
+            return {
+                ...old,
+                chats: {
+                    ...old.chats,
+                    [groupId]: {
+                        ...old.chats[groupId],
+                        messages: [message, ...old.chats[groupId].messages],
+                        unread: old.chats[groupId].unread + 1,
+                    }
+                }
+            }
+        });
+    });
+
     useEffect(() => {
         client.get("update-user-data", encrypt(password, userData)).then(res => {
             if (res.error) {

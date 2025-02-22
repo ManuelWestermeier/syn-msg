@@ -7,7 +7,7 @@ import { error } from "console";
 const allowedMemberTypes = ["client", "admin", "listener"];
 
 const users = JSON.parse(fs.readFileSync("./server/data/users.txt"));
-const groups = {}
+const groups = JSON.parse(fs.readFileSync("./server/data/groups.txt"));
 
 setInterval(() => {
   const data = {};
@@ -17,7 +17,12 @@ setInterval(() => {
       clients: [],
     };
   }
+
   fs.writeFileSync("./server/data/users.txt", JSON.stringify(data, null, 3), "utf-8");
+  fs.writeFileSync("./server/data/groups.txt", JSON.stringify(groups, null, 3), "utf-8");
+
+  console.log("users: ", users);
+  console.log("groups: ", groups);
 }, 10_000);
 
 createServer({ port: 28028 }, async (client) => {
@@ -29,7 +34,7 @@ createServer({ port: 28028 }, async (client) => {
       const unreadMessages = users[currentUser].unread;
       for (const message of unreadMessages) {
         const res = await client.get("send-message", message);
-        if (res instanceof Error) {
+        if (res instanceof Error || res == false) {
           return;
         }
       }
@@ -104,18 +109,23 @@ createServer({ port: 28028 }, async (client) => {
 
     const { members } = groups[groupId];
 
+    const messageData = {
+      message: message,
+      groupId,
+    }
+
     for (const member in members) {
       if (users[member]) {
         if (!users[member]?.clients?.length) {
           for (const client in users[member].clients) {
-            const res = await client.get("send-message", message);
-            if (res instanceof Error) {
-              users[currentUser].unread.push(message);
+            const res = await client.get("send-message", messageData);
+            if (res instanceof Error || res == false) {
+              users[currentUser].unread.push(messageData);
             }
           }
         }
         else {
-          users[currentUser].unread.push(message);
+          users[currentUser].unread.push(messageData);
         }
       }
     }
